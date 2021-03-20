@@ -12,6 +12,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.newlecture.web.entity.Notice;
@@ -23,51 +25,21 @@ public class JDBCNoticeService implements NoticeService {
 //	private String uid = "scott";
 //	private String pwd = "tiger";
 //	private String driver = "oracle.jdbc.driver.OracleDriver";
+	
 	@Autowired
 	private DataSource dataSource;
 
 	public List<Notice> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
 		
-		int start = 1 + (page-1)*10; // 1, 11, 21, 31, ..
-		int end = 10*page; //10, 20, 30, 40, ..
-		String sql = "SELECT * FROM NOTICE1_VIEW WHERE "+field+" LIKE ? AND NUM BETWEEN ? AND ?";
-		
-	
-		//Class.forName(driver); 	// jdbc driver load (메모리에 잡히게됨)
-		//Connection con = DriverManager.getConnection(url, uid, pwd); // 연결객체
-		Connection con = dataSource.getConnection();
-		PreparedStatement st = con.prepareStatement(sql); //실행 도구생성
-		st.setString(1, "%"+query+"%");
-		st.setInt(2, start);
-		st.setInt(3, end);
-		ResultSet rs = st.executeQuery(); // 결과 실행
-		
-		List<Notice> list = new ArrayList<Notice>();
-		
-		while(rs.next()) { //5개의 게시판 정보가 있음
-			int id = rs.getInt("ID");
-			String title = rs.getString("TITLE");
-			String writer_id = rs.getString("WRITER_ID");
-			Date regdate = rs.getDate("REGDATE");
-			String content = rs.getString("CONTENT");
-			int hit = rs.getInt("HIT");
-			String files = rs.getString("FILES");
-
-			Notice notice = new Notice(
-								id,
-								title,
-								writer_id,
-								regdate,
-								content,
-								hit,
-								files
-							);	
-			
-			list.add(notice);
-		}
-		rs.close();
-		st.close();
-		con.close();
+//		int start = 1 + (page-1)*10; // 1, 11, 21, 31, ..
+//		int end = 10*page; //10, 20, 30, 40, ..
+//		String sql = "SELECT * FROM NOTICE1";
+//		
+//		JdbcTemplate template = new JdbcTemplate();
+//		template.setDataSource(dataSource);
+//		List<Notice> list = template.query(sql, new BeanPropertyRowMapper(Notice.class));
+//		
+		List<Notice> list = null;
 		return list;
 	}
 
@@ -94,7 +66,7 @@ public class JDBCNoticeService implements NoticeService {
 	
 	public int insert(Notice notice) throws SQLException, ClassNotFoundException {
 		String title = notice.getTitle();
-		String writerId = notice.getWriter_id();
+		String writerId = notice.getWriterId();
 		String content = notice.getContent();
 		String files = notice.getFiles();
 		

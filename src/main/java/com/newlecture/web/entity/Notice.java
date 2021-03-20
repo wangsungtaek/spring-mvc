@@ -5,8 +5,8 @@ import java.util.Date;
 public class Notice {
 	private int id;
 	private String title;
-	private String writer_id;
-	private Date regdate;
+	private String writerId;
+	private Date regDate;
 	private String content;
 	private int hit;
 	private String files;
@@ -14,20 +14,18 @@ public class Notice {
 	public Notice() {
 		
 	}
-	public Notice(String title, String writer_id, String content) {
-		this.title = title;
-		this.writer_id = writer_id;
-		this.content = content;
-	}
-	public Notice(int id, String title, String writer_id, Date regdate, String content, int hit, String files) {
+	
+	public Notice(int id, String title, String writerId, Date regDate, String content, int hit, String files) {
+		super();
 		this.id = id;
 		this.title = title;
-		this.writer_id = writer_id;
-		this.regdate = regdate;
+		this.writerId = writerId;
+		this.regDate = regDate;
 		this.content = content;
 		this.hit = hit;
 		this.files = files;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -40,17 +38,17 @@ public class Notice {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getWriter_id() {
-		return writer_id;
+	public String getWriterId() {
+		return writerId;
 	}
-	public void setWriter_id(String writer_id) {
-		this.writer_id = writer_id;
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
 	}
-	public Date getRegdate() {
-		return regdate;
+	public Date getRegDate() {
+		return regDate;
 	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 	public String getContent() {
 		return content;
@@ -68,7 +66,12 @@ public class Notice {
 	public String getFiles() {
 		return files;
 	}
+
 	public void setFiles(String files) {
 		this.files = files;
 	}
+	
+	
+	
+	
 }
